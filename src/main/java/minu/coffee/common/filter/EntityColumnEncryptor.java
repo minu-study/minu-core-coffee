@@ -23,5 +23,4 @@ public class EntityColumnEncryptor implements AttributeConverter<String, String>
         return EncUtil.decrypt(dbData);
     }
 
-
 }

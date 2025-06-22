@@ -10,63 +10,63 @@ public class EncUtil {
 
     private static String encryptKey;
     private static String encryptSalt;
-
     private static StandardPBEStringEncryptor encryptor;
 
-    public static void ResetEncryptor() {
-        log.error("ResetEncryptor");
+    static {
         encryptor = new StandardPBEStringEncryptor();
-        encryptor.setPassword(EncUtil.encryptKey);
-        encryptor.setAlgorithm("PBEWithMD5AndDES");
-        encryptor.setSaltGenerator(new StringFixedSaltGenerator(EncUtil.encryptSalt));
     }
 
     public EncUtil(@Value("${common.encrypt.key}") String encryptKey,
                    @Value("${common.encrypt.salt}") String encryptSalt) {
         EncUtil.encryptKey = encryptKey;
         EncUtil.encryptSalt = encryptSalt;
+        ResetEncryptor();
+    }
+
+    public static void ResetEncryptor() {
+        if (encryptKey == null || encryptKey.isEmpty()) {
+            throw new IllegalStateException("Encryption password is not set!");
+        }
+        log.info("Initializing Encryptor");
         encryptor = new StandardPBEStringEncryptor();
         encryptor.setPassword(EncUtil.encryptKey);
         encryptor.setAlgorithm("PBEWithMD5AndDES");
         encryptor.setSaltGenerator(new StringFixedSaltGenerator(EncUtil.encryptSalt));
     }
 
-
-
     public static String encrypt(String str) {
-        String encStr = null;
-        if (str == null || str.equals("null") || str.isEmpty() || str.trim().length() < 1) {
-            log.error("encrypt parameter null");
+        if (str == null || str.isEmpty()) {
+            log.warn("Encrypt parameter is null or empty");
             return null;
         }
         try {
-            encStr = encryptor.encrypt(str);
+            return encryptor.encrypt(str);
         } catch (Exception e) {
-            log.error("encrypt getMessage {}", e.getMessage());
-            e.printStackTrace();
-
-            ResetEncryptor();
+            log.error("Encryption failed: {}", e.getMessage());
+            ResetEncryptor(); // 재초기화 시도
+            return encryptor.encrypt(str); // 재시도
         }
-        return encStr;
     }
 
     public static String decrypt(String encStr) {
-        String decStr = null;
-        if (encStr == null || encStr.equals("null") || encStr.isEmpty() || encStr.trim().length() < 1) {
-            log.error("decrypt parameter null");
+        if (encStr == null || encStr.isEmpty()) {
+            log.warn("Decrypt parameter is null or empty");
             return null;
         }
         try {
-            decStr = encryptor.decrypt(encStr);
+            return encryptor.decrypt(encStr);
         } catch (Exception e) {
-            log.error("decrypt getMessage {}", e.getMessage());
-            e.printStackTrace();
-
-            ResetEncryptor();
+            log.error("Decryption failed: {}", e.getMessage());
+            ResetEncryptor(); // 재초기화 시도
+            return encryptor.decrypt(encStr); // 재시도
         }
-        return decStr;
     }
 
+    public static void setEncryptKey(String key) {
+        encryptKey = key;
+    }
 
-
+    public static void setEncryptSalt(String salt) {
+        encryptSalt = salt;
+    }
 }
