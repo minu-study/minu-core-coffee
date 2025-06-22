@@ -1,8 +1,8 @@
-package minu.coffee.filter;
+package minu.coffee.common.filter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import minu.coffee.util.EncUtil;
+import minu.coffee.common.util.EncUtil;
 
 @Converter
 public class EntityColumnEncryptor implements AttributeConverter<String, String> {
