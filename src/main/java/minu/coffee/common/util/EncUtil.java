@@ -25,10 +25,10 @@ public class EncUtil {
                    @Value("${common.encrypt.salt}") String encryptSalt) {
         EncUtil.encryptKey = encryptKey;
         EncUtil.encryptSalt = encryptSalt;
-        ResetEncryptor();
+        resetEncryptor();
     }
 
-    public static void ResetEncryptor() {
+    public static void resetEncryptor() {
         if (encryptKey == null || encryptKey.isEmpty()) {
             throw new IllegalStateException("Encryption password is not set!");
         }
