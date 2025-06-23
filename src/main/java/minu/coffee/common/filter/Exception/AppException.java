@@ -22,30 +22,36 @@ public class AppException extends RuntimeException {
     }
 
     public AppException(String message) {
+        super(message);
         this.message = message;
     }
     public AppException(String errorCode, String message) {
+        super(message);
         this.errorCode = errorCode;
         this.message = message;
     }
 
     public AppException(ErrorCode error) {
+        super(error.getMsg());
         this.errorCode = error.getCode();
         this.message = error.getMsg();
     }
 
     public AppException(ErrorCode error, String message) {
+        super(error.getMsg() + message);
         this.errorCode = error.getCode();
         this.message = error.getMsg() + message;
     }
 
     public AppException(ErrorCode errorCode, String message, Map<String, Object> data) {
+        super(message);
         this.errorCode = errorCode.getCode();
         this.message = message;
         this.data = data;
     }
 
     public AppException(String errorCode, String message, HttpStatus httpStatus) {
+        super(message);
         this.errorCode = errorCode;
         this.message = message;
         this.httpStatus = httpStatus;
