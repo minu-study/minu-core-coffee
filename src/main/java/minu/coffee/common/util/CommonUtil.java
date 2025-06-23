@@ -64,10 +64,7 @@ public class CommonUtil {
     }
 
     public static ResponseEntity<ApiResponse> convertResponse(Object result) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-
-        HashMap<String, Object> convert = objectMapper.convertValue(result, HashMap.class);
+        HashMap<String, Object> convert = OBJECT_MAPPER.convertValue(result, HashMap.class);
         return ResponseEntity.ok(
                 ApiResponse.builder().data(convert).build());
     }
