@@ -39,9 +39,10 @@ public class LoginDto {
 
         @Getter
         @Setter
-        @NotBlank
         public static class Request {
+            @NotBlank
             private String id;
+            @NotBlank
             private String password;
         }
 
