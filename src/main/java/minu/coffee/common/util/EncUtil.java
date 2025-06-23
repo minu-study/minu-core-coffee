@@ -14,6 +14,11 @@ public class EncUtil {
 
     static {
         encryptor = new StandardPBEStringEncryptor();
+        try {
+            ResetEncryptor();
+        } catch (IllegalStateException e) {
+            log.warn("Encryptor initialization failed in static block: {}", e.getMessage());
+        }
     }
 
     public EncUtil(@Value("${common.encrypt.key}") String encryptKey,
