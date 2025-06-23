@@ -1,4 +1,4 @@
-package minu.coffee.common.filter.Exception;
+package minu.coffee.common.filter.exception;
 
 import minu.coffee.common.model.ApiResponse;
 import org.springframework.http.HttpStatus;
