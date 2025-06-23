@@ -59,11 +59,11 @@ public class CommonUtil {
         return ip;
     }
 
-    public static ResponseEntity<ApiResponse> ConvertResponse() {
+    public static ResponseEntity<ApiResponse> convertResponse() {
         return ResponseEntity.ok(ApiResponse.builder().build());
     }
 
-    public static ResponseEntity<ApiResponse> ConvertResponse(Object result) {
+    public static ResponseEntity<ApiResponse> convertResponse(Object result) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
