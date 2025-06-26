@@ -1,4 +1,4 @@
-package minu.coffee.common.filter.exception;
+package minu.coffee.common.filter.customException;
 
 import lombok.Getter;
 import lombok.Setter;

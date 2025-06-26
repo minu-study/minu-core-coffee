@@ -15,7 +15,7 @@ public class EncUtil {
     static {
         encryptor = new StandardPBEStringEncryptor();
         try {
-            ResetEncryptor();
+            resetEncryptor();
         } catch (IllegalStateException e) {
             log.warn("Encryptor initialization failed in static block: {}", e.getMessage());
         }
@@ -48,7 +48,7 @@ public class EncUtil {
             return encryptor.encrypt(str);
         } catch (Exception e) {
             log.error("Encryption failed: {}", e.getMessage());
-            ResetEncryptor(); // 재초기화 시도
+            resetEncryptor(); // 재초기화 시도
             return encryptor.encrypt(str); // 재시도
         }
     }
@@ -62,7 +62,7 @@ public class EncUtil {
             return encryptor.decrypt(encStr);
         } catch (Exception e) {
             log.error("Decryption failed: {}", e.getMessage());
-            ResetEncryptor(); // 재초기화 시도
+            resetEncryptor(); // 재초기화 시도
             return encryptor.decrypt(encStr); // 재시도
         }
     }
