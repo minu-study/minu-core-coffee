@@ -19,6 +19,9 @@ import java.util.HashMap;
 @Slf4j
 public class CommonUtil {
 
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+            .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
     public static HttpServletRequest getHttpServletRequest() {
         ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes());
         return servletRequestAttributes.getRequest();

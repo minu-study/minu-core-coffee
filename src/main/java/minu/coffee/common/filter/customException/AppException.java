@@ -1,10 +1,9 @@
-package minu.coffee.common.filter.Exception;
+package minu.coffee.common.filter.customException;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Getter

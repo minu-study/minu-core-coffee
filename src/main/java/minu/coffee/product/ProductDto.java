@@ -32,7 +32,7 @@ public class ProductDto {
         @Setter
         public static class Request {
             @NotNull
-            private Long shopId;
+            private Long subcategoryId;
         }
 
         @Getter
