@@ -2,6 +2,7 @@ package minu.coffee.common.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +12,13 @@ import minu.coffee.common.model.TokenMember;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class CommonUtil {
@@ -71,6 +75,21 @@ public class CommonUtil {
         return ResponseEntity.ok(
                 ApiResponse.builder().data(convert).build());
     }
+
+    public static MultiValueMap<String, String> convertDtoToMap(ObjectMapper objectMapper, Object dto) {
+        try {
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+            Map<String, String> map = objectMapper.convertValue(dto, new TypeReference<Map<String, String>>() {
+            });
+            params.setAll(map);
+
+            return params;
+        } catch (Exception e) {
+            log.error("Url Parameter 변환중 오류가 발생했습니다. requestDto={}", dto, e);
+            throw new IllegalStateException("Url Parameter 변환중 오류가 발생했습니다.");
+        }
+    }
+
 
     public static TokenInfo getTokenInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
